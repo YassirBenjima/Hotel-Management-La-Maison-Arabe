@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "rooms")
 public class Room {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,9 +21,9 @@ public class Room {
     private BigDecimal roomPrice;
     private String roomPhotoUrl;
     private String roomDescription;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Booking> bookings = new ArrayList<>();
+
 
     @Override
     public String toString() {
@@ -32,7 +33,6 @@ public class Room {
                 ", roomPrice=" + roomPrice +
                 ", roomPhotoUrl='" + roomPhotoUrl + '\'' +
                 ", roomDescription='" + roomDescription + '\'' +
-                ", bookings=" + bookings +
                 '}';
     }
 }

@@ -3,7 +3,7 @@ package com.maisonarabe.MaisonArabe.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -17,16 +17,16 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Check in date is required")
+    @NotNull(message = "check in date is required")
     private LocalDate checkInDate;
 
-    @Future(message = "Check out date must be in the future")
+    @Future(message = "check out date must be in the future")
     private LocalDate checkOutDate;
 
-    @Min(value = 1,message = "Number of adults must not be less that 1")
+    @Min(value = 1, message = "Number of adults must not be less that 1")
     private int numOfAdults;
 
-    @Min(value = 0,message = "Number of adults must not be less that 0")
+    @Min(value = 0, message = "Number of children must not be less that 0")
     private int numOfChildren;
 
     private int totalNumOfGuest;
@@ -41,19 +41,18 @@ public class Booking {
     @JoinColumn(name = "room_id")
     private Room room;
 
-
-    public void calculateTotalnumberOfGuest(){
+    public void calculateTotalNumberOfGuest() {
         this.totalNumOfGuest = this.numOfAdults + this.numOfChildren;
     }
 
-    public void setNumOfAdults(@Min(value = 1, message = "Number of adults must not be less that 1") int numOfAdults) {
+    public void setNumOfAdults(int numOfAdults) {
         this.numOfAdults = numOfAdults;
-        calculateTotalnumberOfGuest();
+        calculateTotalNumberOfGuest();
     }
 
-    public void setNumOfChildren(@Min(value = 0, message = "Number of adults must not be less that 0") int numOfChildren) {
+    public void setNumOfChildren(int numOfChildren) {
         this.numOfChildren = numOfChildren;
-        calculateTotalnumberOfGuest();
+        calculateTotalNumberOfGuest();
     }
 
     @Override
